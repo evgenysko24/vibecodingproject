@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>МетАссистент — Персональный ассистент по встречам</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d0d12;color:#fff;line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:100;background:#0d0d12}
+.logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:600}
+.logo-circle{width:36px;height:36px;border-radius:50%;background:#5b6ef5;display:flex;align-items:center;justify-content:center}
+.logo-circle svg{width:20px;height:20px;fill:white}
+.tg-btn{display:flex;align-items:center;gap:8px;background:#5b6ef5;color:white;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600}
+.tg-btn svg{width:16px;height:16px;fill:white}
+
+.hero{text-align:center;padding:80px 24px 60px;max-width:860px;margin:0 auto}
+.hero-badge{display:inline-block;border:1px solid #2a2a3a;border-radius:20px;padding:8px 18px;font-size:12px;letter-spacing:1px;color:#8888aa;margin-bottom:36px}
+.hero h1{font-size:clamp(36px,5.5vw,62px);font-weight:800;line-height:1.15;margin-bottom:20px}
+.hero h1 .accent{color:#4ecdc4}
+.hero-sub{font-size:17px;color:#8888aa;max-width:500px;margin:0 auto 40px;line-height:1.7}
+.btn-big{display:inline-block;background:#5b6ef5;color:white;padding:18px 48px;border-radius:14px;font-size:17px;font-weight:700}
+.checks{display:flex;gap:24px;justify-content:center;color:#8888aa;font-size:14px;margin-top:16px;flex-wrap:wrap}
+.checks span::before{content:'✓ '}
+.chat-demo{max-width:380px;margin:56px auto 0;background:#14141c;border-radius:20px;padding:20px;border:1px solid #2a2a3a}
+.chat-msg{background:#5b6ef5;border-radius:14px 14px 4px 14px;padding:14px 16px;font-size:15px;line-height:1.5;margin-bottom:12px}
+.chat-time{text-align:right;font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px}
+.chat-reply{background:#1e1e2c;border-radius:4px 14px 14px 14px;padding:14px 16px;font-size:14px;line-height:1.7;border:1px solid #2a2a3a}
+
+section{padding:80px 24px}
+.section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8888aa;text-align:center;margin-bottom:16px}
+.section-title{font-size:clamp(26px,3.5vw,42px);font-weight:800;text-align:center;margin-bottom:52px}
+
+.pain-section{background:#0f0f18}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.pain-card{background:#1a1a26;border-radius:16px;padding:28px;border:1px solid #2a2a3a}
+.pain-emoji{font-size:28px;margin-bottom:16px}
+.pain-card h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.pain-card p{font-size:14px;color:#8888aa;line-height:1.6}
+
+.how-section{background:#0d0d12}
+.steps-row{display:flex;align-items:flex-start;max-width:1000px;margin:0 auto;position:relative}
+.steps-row::before{content:'';position:absolute;top:24px;left:18%;right:18%;height:1px;background:repeating-linear-gradient(90deg,#2a2a3a 0,#2a2a3a 6px,transparent 6px,transparent 12px)}
+.step-col{flex:1;text-align:center;padding:0 16px}
+.step-num{width:48px;height:48px;border-radius:50%;background:#5b6ef5;color:white;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;margin:0 auto 20px;position:relative;z-index:1}
+.step-col h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.step-col p{font-size:14px;color:#8888aa;line-height:1.6;margin-bottom:16px}
+.step-pill{display:inline-block;background:#1a1a26;border:1px solid #2a2a3a;border-radius:20px;padding:8px 16px;font-size:13px;color:#8888aa}
+.step-checklist{background:#1a1a26;border:1px solid #2a2a3a;border-radius:12px;padding:12px 16px;text-align:left;display:inline-block;font-size:13px}
+.step-checklist div{margin:4px 0;color:#fff}
+.step-checklist div::before{content:'✓ ';color:#4ecdc4}
+.step-notif{background:#1a1a26;border:1px solid #2a2a3a;border-radius:12px;padding:10px 16px;font-size:13px;color:#fff;display:inline-flex;align-items:center;gap:8px}
+
+.features-section{background:#0f0f18}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:960px;margin:0 auto}
+.feat-card{background:#1a1a26;border-radius:16px;padding:28px;border:1px solid #2a2a3a;border-left:3px solid #5b6ef5}
+.feat-card.wide{grid-column:1/-1}
+.feat-emoji{font-size:26px;margin-bottom:14px}
+.feat-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:14px;color:#8888aa;line-height:1.6}
+
+.who-section{background:#0d0d12}
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.who-card{background:#1a1a26;border-radius:16px;padding:28px;border:1px solid #2a2a3a}
+.who-emoji{font-size:28px;margin-bottom:16px}
+.who-card h3{font-size:17px;font-weight:700;margin-bottom:16px}
+.who-desc{font-size:14px;color:#8888aa;margin-bottom:16px;line-height:1.6}
+.who-check{display:flex;gap:8px;font-size:14px;margin-bottom:8px;color:#4ecdc4}
+.who-check::before{content:'✓';min-width:16px}
+
+.example-section{background:#0f0f18}
+.example-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px;margin:0 auto}
+.col-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8888aa;margin-bottom:16px}
+.ex-msg{background:#5b6ef5;border-radius:14px 14px 4px 14px;padding:18px;font-size:15px;line-height:1.6;margin-bottom:8px}
+.ex-meta{font-size:13px;color:#8888aa;padding:0 4px}
+.ex-card{background:#1a1a26;border-radius:16px;padding:20px;border:1px solid #2a2a3a}
+.ex-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #2a2a3a;font-size:14px}
+.ex-row:last-child{border-bottom:none}
+.ex-key{color:#8888aa;min-width:120px}
+.ex-val{color:white;font-weight:500}
+.arrow-down{text-align:center;margin:32px 0 12px;color:#8888aa;font-size:20px}
+.brief-hint{text-align:center;color:#8888aa;font-size:14px}
+
+.cta-section{background:#0d0d12;text-align:center;padding:100px 24px}
+.cta-section h2{font-size:clamp(28px,4vw,48px);font-weight:800;margin-bottom:16px}
+.cta-section p{font-size:16px;color:#8888aa;max-width:480px;margin:0 auto 36px}
+.cta-checks{display:flex;gap:20px;justify-content:center;margin-top:20px;font-size:14px;color:#8888aa;flex-wrap:wrap}
+.cta-checks span::before{content:'✓ '}
+
+footer{background:#0d0d12;border-top:1px solid #2a2a3a;padding:32px 40px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand h4{font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.footer-brand p{font-size:13px;color:#8888aa}
+.footer-copy{font-size:13px;color:#8888aa;margin-top:4px}
+.footer-links{display:flex;gap:24px;font-size:14px;color:#8888aa;align-items:center}
+.footer-links a:hover{color:#fff}
+
+@media(max-width:700px){
+  nav{padding:14px 20px}
+  .steps-row{flex-direction:column;gap:32px}
+  .steps-row::before{display:none}
+  .features-grid,.example-cols{grid-template-columns:1fr}
+  .feat-card.wide{grid-column:auto}
+  footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-circle">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+    </div>
+    МетАссистент
+  </div>
+  <a href="https://t.me/" class="tg-btn">
+    <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+    Открыть в Telegram
+  </a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">TELEGRAM · ГОЛОС + ТЕКСТ · ИИ-СТРУКТУРИРОВАНИЕ</div>
+  <h1>Встреча прошла.<br>Контекст <span class="accent">не потеряется.</span></h1>
+  <p class="hero-sub">Надиктуйте боту пару фраз сразу после встречи — он сам структурирует, сохранит и напомнит в нужный момент.</p>
+  <a href="https://t.me/" class="btn-big">Попробовать бесплатно →</a>
+  <div class="checks">
+    <span>Бесплатно</span>
+    <span>Без регистрации</span>
+    <span>Работает сразу</span>
+  </div>
+  <div class="chat-demo">
+    <div class="chat-msg">
+      Встретился с Ивановым из РусАгро, говорили про новый завод, беспокоит срок внедрения
+      <div class="chat-time">17:42</div>
+    </div>
+    <div class="chat-reply">
+      ✅ Записал встречу<br>
+      👤 Иванов — РусАгро<br>
+      💬 Тема: сроки внедрения<br>
+      📅 Следующий шаг: уточнить дедлайн
+      <div class="chat-time" style="margin-top:8px">17:42</div>
+    </div>
+  </div>
+</div>
+
+<section class="pain-section">
+  <p class="section-label">ЗНАКОМО?</p>
+  <h2 class="section-title">Встречи есть. Записей нет.</h2>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-emoji">🚶</div>
+      <h3>Вышли — забыли</h3>
+      <p>Через час после встречи половина деталей уже размыта. Имена, договорённости, нюансы — всё смешалось.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-emoji">📋</div>
+      <h3>CRM стоит пустой</h3>
+      <p>Открывать систему и заполнять поля после каждой встречи — слишком много трений. Руки не доходят.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-emoji">📁</div>
+      <h3>Заметки не работают</h3>
+      <p>Записали в телефон, в Notion, в блокнот. Потом не нашли, не перечитали, не использовали.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
+  <p class="section-label">КАК ЭТО РАБОТАЕТ</p>
+  <h2 class="section-title">Три шага — и всё сохранено</h2>
+  <div class="steps-row">
+    <div class="step-col">
+      <div class="step-num">1</div>
+      <h3>Надиктуйте сразу</h3>
+      <p>После встречи откройте Telegram и напишите или надиктуйте всё что помните — в любой форме, без структуры.</p>
+      <div class="step-pill">🎙 Голосовое · 00:23</div>
+    </div>
+    <div class="step-col">
+      <div class="step-num">2</div>
+      <h3>Бот структурирует</h3>
+      <p>ИИ извлекает имя, компанию, тему разговора, договорённости и следующий шаг — автоматически.</p>
+      <div class="step-checklist">
+        <div>Имя</div>
+        <div>Компания</div>
+        <div>Тема</div>
+        <div>Следующий шаг</div>
+      </div>
+    </div>
+    <div class="step-col">
+      <div class="step-num">3</div>
+      <h3>Напомнит в нужный момент</h3>
+      <p>Перед следующей встречей бот пришлёт бриф: кто этот человек, о чём говорили, что договорились.</p>
+      <div class="step-notif">🔔 Встреча с Ивановым через 1 час · Бриф готов</div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <p class="section-label">ЧТО ВНУТРИ</p>
+  <h2 class="section-title">Бот делает это за вас</h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-emoji">📁</div>
+      <h3>Карточка встречи</h3>
+      <p>Имя, компания, должность, тема разговора и договорённости — в одной структурированной записи.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-emoji">⏰</div>
+      <h3>Напоминания</h3>
+      <p>Укажите дату следующего контакта — бот напомнит сам, без лишних настроек.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-emoji">📋</div>
+      <h3>Бриф перед встречей</h3>
+      <p>Команда /brief [имя] — и вы получаете сводку по человеку за 5 секунд.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-emoji">🔍</div>
+      <h3>Поиск по базе</h3>
+      <p>Напишите имя или компанию — бот найдёт все встречи и контекст по этому человеку.</p>
+    </div>
+    <div class="feat-card wide">
+      <div class="feat-emoji">🎙</div>
+      <h3>Голос или текст — как удобно</h3>
+      <p>Надиктуйте голосовое прямо из машины или напишите текстом. Бот поймёт в любом формате.</p>
+    </div>
+  </div>
+</section>
+
+<section class="who-section">
+  <p class="section-label">ДЛЯ КОГО</p>
+  <h2 class="section-title">Узнайте себя</h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-emoji">👔</div>
+      <h3>Директор по маркетингу</h3>
+      <p class="who-desc">Много партнёрских переговоров, регуляторные встречи, экосистема контактов.</p>
+      <div class="who-check">Контекст по каждому партнёру</div>
+      <div class="who-check">Поводы для следующего касания</div>
+      <div class="who-check">Бриф перед встречей с регулятором</div>
+    </div>
+    <div class="who-card">
+      <div class="who-emoji">💼</div>
+      <h3>Менеджер по продажам</h3>
+      <p class="who-desc">Длинный цикл сделки, несколько стейкхолдеров, важно помнить каждую деталь.</p>
+      <div class="who-check">История по каждому контакту</div>
+      <div class="who-check">Напоминание о следующем шаге</div>
+      <div class="who-check">Карта участников сделки</div>
+    </div>
+    <div class="who-card">
+      <div class="who-emoji">🧭</div>
+      <h3>Руководитель</h3>
+      <p class="who-desc">Встречи с командой, клиентами, подрядчиками — контекст нужен по всем.</p>
+      <div class="who-check">Единая база всех контактов</div>
+      <div class="who-check">Не терять договорённости</div>
+      <div class="who-check">Работает без CRM</div>
+    </div>
+  </div>
+</section>
+
+<section class="example-section">
+  <p class="section-label">ПРИМЕР</p>
+  <h2 class="section-title">Вот как это выглядит</h2>
+  <div class="example-cols">
+    <div>
+      <div class="col-label">ЧТО ВЫ НАПИСАЛИ</div>
+      <div class="ex-msg">Встретился с Ивановым Сергеем из РусАгро, директор по IT. Говорили про маркировку молочки, у них дедлайн март. Беспокоит стоимость интеграции. Договорились — я пришлю КП до пятницы.</div>
+      <div class="ex-meta">Сегодня, 17:42 · Голосовое 0:34</div>
+    </div>
+    <div>
+      <div class="col-label">ЧТО СОХРАНИЛ БОТ</div>
+      <div class="ex-card">
+        <div class="ex-row"><span class="ex-key">👤 Контакт:</span><span class="ex-val">Иванов Сергей</span></div>
+        <div class="ex-row"><span class="ex-key">🏢 Компания:</span><span class="ex-val">РусАгро · Директор по IT</span></div>
+        <div class="ex-row"><span class="ex-key">💬 Тема:</span><span class="ex-val">Маркировка молочной продукции</span></div>
+        <div class="ex-row"><span class="ex-key">⚡ Боль:</span><span class="ex-val">Стоимость интеграции</span></div>
+        <div class="ex-row"><span class="ex-key">📅 Дедлайн:</span><span class="ex-val">Март</span></div>
+        <div class="ex-row"><span class="ex-key">✅ Договорились:</span><span class="ex-val">КП до пятницы</span></div>
+        <div class="ex-row"><span class="ex-key">🔔 Напоминание:</span><span class="ex-val">Чт, 18:00</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow-down">↓</div>
+  <div class="brief-hint">Команда /brief Иванов вернёт это в любой момент</div>
+</section>
+
+<section class="cta-section">
+  <h2>Попробуйте после<br>следующей встречи</h2>
+  <p>Откройте бота в Telegram, напишите что угодно после встречи — и посмотрите что произойдёт.</p>
+  <a href="https://t.me/" class="btn-big">Открыть бота в Telegram →</a>
+  <div class="cta-checks">
+    <span>Бесплатно</span>
+    <span>Работает сразу</span>
+    <span>Только Telegram — ничего лишнего</span>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <h4>
+      <div class="logo-circle" style="width:30px;height:30px">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+      </div>
+      МетАссистент
+    </h4>
+    <p>Ваша память о встречах</p>
+    <p class="footer-copy">© 2024</p>
+  </div>
+  <div class="footer-links">
+    <a href="#">Открыть бота</a>
+    <a href="#">Написать автору</a>
+  </div>
+</footer>
+
+</body>
+</html>
